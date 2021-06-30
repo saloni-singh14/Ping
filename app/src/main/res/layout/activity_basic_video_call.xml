@@ -58,8 +58,11 @@
             android:layout_height="40dp"
             android:layout_weight="20"
             android:onClick="onAudioMuteClicked"
+            android:visibility="gone"
             android:scaleType="centerInside"
-            android:src="@drawable/audio_toggle_btn" />
+            android:src="@drawable/audio_toggle_btn"/>
+            <!--android:src="@drawable/audio_toggle_btn"-->
+
 
         <ImageView
             android:id="@+id/leaveBtn"
@@ -67,6 +70,7 @@
             android:layout_height="match_parent"
             android:layout_weight="20"
             android:onClick="onLeaveChannelClicked"
+            android:visibility="gone"
             android:scaleType="centerInside"
             android:src="@drawable/end_call" />
 
@@ -76,6 +80,7 @@
             android:layout_height="40dp"
             android:layout_weight="20"
             android:onClick="onVideoMuteClicked"
+            android:visibility="gone"
             android:scaleType="centerInside"
             android:src="@drawable/video_toggle_btn" />
 

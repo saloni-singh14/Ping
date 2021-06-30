@@ -1,7 +1,6 @@
-package com.example.ping;
+package com.example.ping.acitivities;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,13 +64,13 @@ import io.agora.rtm.RtmClientListener;
 import io.agora.rtm.RtmMessage;
 import io.agora.rtm.RtmStatusCode;
 
-public class MainActivity extends AppCompatActivity {public static final int LAYOUT_TYPE_DEFAULT = 0;
+public class VideoCallActivity extends AppCompatActivity {public static final int LAYOUT_TYPE_DEFAULT = 0;
 
     private List<DBUser> searchFriendList = new ArrayList<>();
     private String userName;
     private String channelName;
     private User user;
-    private static final String TAG = MainActivity.class.getName();
+    private static final String TAG = VideoCallActivity.class.getName();
     public int mLayoutType = LAYOUT_TYPE_DEFAULT;
     private static final int PERMISSION_REQ_ID = 22;
     RtcEngine mRtcEngine;
@@ -170,7 +169,7 @@ public class MainActivity extends AppCompatActivity {public static final int LAY
         if (ab != null) {
             ab.hide();
         }
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_video_call);
         getExtras();
         initUI();
         connectToFireDB(userName);
@@ -198,12 +197,7 @@ public class MainActivity extends AppCompatActivity {public static final int LAY
     }
 
     private void getExtras() {
-        userName="temp1";
-        Bundle extras = getIntent().getExtras();
-        if(extras!=null)
         userName = getIntent().getExtras().getString("userName");
-        if(userName=="")
-            userName="temp1";
         channelName = userName;
         user = new User();
     }
@@ -286,28 +280,16 @@ public class MainActivity extends AppCompatActivity {public static final int LAY
             Log.e(TAG, Log.getStackTraceString(e));
             throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
         }
-        //if (AGApplication)
-        AGApplication temp = new AGApplication();
-        if (temp!=null && temp.the()!=null)
-        {
-            mChatManager = temp.the().getChatManager();
-            mRtmClient = mChatManager.getRtmClient();
-            mClientListener = new MyRtmClientListener();
-            mChatManager.registerListener(mClientListener);
-        }
-        else
-        {
-            Toast.makeText(this,"Agapplication is null",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
-            intent.putExtra("userName", "yolo");
-            startActivity(intent);
-        }
 
+        mChatManager = AGApplication.the().getChatManager();
+        mRtmClient = mChatManager.getRtmClient();
+        mClientListener = new MyRtmClientListener();
+        mChatManager.registerListener(mClientListener);
     }
 
     //login into RTM for chat messaging
     private void loginRTM() {
-        mRtmClient.login(null, userName, new io.agora.rtm.ResultCallback<Void>() {
+        mRtmClient.login(null, userName, new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 
@@ -335,7 +317,7 @@ public class MainActivity extends AppCompatActivity {public static final int LAY
 
                 mUidsList.put(0, surfaceView);
 
-                mGridVideoViewContainer.initViewContainer(MainActivity.this, 0, mUidsList, mIsLandscape);
+                mGridVideoViewContainer.initViewContainer(VideoCallActivity.this, 0, mUidsList, mIsLandscape);
             }
         });
     }
@@ -403,7 +385,6 @@ public class MainActivity extends AppCompatActivity {public static final int LAY
         mMessageBeanList = new ArrayList<>();
         // load history chat records
         MessageListBean messageListBean = MessageUtil.getExistMessageListBean(mPeerId);
-        //MessageListBean messageListBean = MessageUtil.getExistMessageListBean(mPeerId);
 
         mTitleTextView.setText(mPeerId);
 
@@ -482,7 +463,7 @@ public class MainActivity extends AppCompatActivity {public static final int LAY
 
     private void switchToDefaultVideoView() {
 
-        mGridVideoViewContainer.initViewContainer(MainActivity.this, user.getAgoraUid(), mUidsList, mIsLandscape);
+        mGridVideoViewContainer.initViewContainer(VideoCallActivity.this, user.getAgoraUid(), mUidsList, mIsLandscape);
 
         boolean setRemoteUserPriorityFlag = false;
 
@@ -846,7 +827,7 @@ public class MainActivity extends AppCompatActivity {public static final int LAY
     }
 
     private void showToast(final String text) {
-        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(VideoCallActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
     private int getMessageColor(String account) {

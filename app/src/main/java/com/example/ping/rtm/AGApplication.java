@@ -15,7 +15,7 @@ public class AGApplication extends Application {
         super.onCreate();
         sInstance = this;
 
-        mChatManager = new ChatManager(this);
+        mChatManager = new ChatManager(getApplicationContext());
         mChatManager.init();
         mChatManager.enableOfflineMessage(true);
     }

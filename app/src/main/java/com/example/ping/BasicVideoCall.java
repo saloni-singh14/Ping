@@ -68,32 +68,6 @@ public class BasicVideoCall extends AppCompatActivity {
         }
     };
 
-    private void onRemoteUserVideoToggle(int uid, int state) {
-        FrameLayout videoContainer = findViewById(R.id.bg_video_container);
-
-        SurfaceView videoSurface = (SurfaceView) videoContainer.getChildAt(0);
-        videoSurface.setVisibility(state == 0 ? View.GONE : View.VISIBLE);
-
-        // add an icon to let the other user know remote video has been disabled
-        if(state == 0){
-            ImageView noCamera = new ImageView(this);
-            noCamera.setImageResource(R.drawable.video_disabled);
-            videoContainer.addView(noCamera);
-        } else {
-            ImageView noCamera = (ImageView) videoContainer.getChildAt(1);
-            if(noCamera != null) {
-                videoContainer.removeView(noCamera);
-            }
-        }
-    }
-
-    private void setupRemoteVideoStream(int uid) {
-        FrameLayout videoContainer = findViewById(R.id.bg_video_container);
-        SurfaceView videoSurface = RtcEngine.CreateRendererView(getBaseContext());
-        videoContainer.addView(videoSurface);
-        mRtcEngine.setupRemoteVideo(new VideoCanvas(videoSurface, VideoCanvas.RENDER_MODE_FIT, uid));
-        mRtcEngine.setRemoteSubscribeFallbackOption(io.agora.rtc.Constants.STREAM_FALLBACK_OPTION_AUDIO_ONLY);
-    }
 
 
     public boolean checkSelfPermission(String permission, int requestCode) {
@@ -160,9 +134,11 @@ public class BasicVideoCall extends AppCompatActivity {
         if (btn.isSelected()) {
             btn.setSelected(false);
             btn.setImageResource(R.drawable.audio_toggle_btn);
+            //btn.setImageResource(R.drawable.btn_unmute_normal);//Now it is unmuted. State - Select again to mute
         } else {
             btn.setSelected(true);
-            btn.setImageResource(R.drawable.audio_toggle_active_btn);
+            //btn.setImageResource(R.drawable.btn_mute_normal);
+            btn.setImageResource(R.drawable.audio_toggle_active_btn);//Now it is muted. State - Click to unmute Audio
         }
 
         mRtcEngine.muteLocalAudioStream(btn.isSelected());
@@ -221,4 +197,33 @@ public class BasicVideoCall extends AppCompatActivity {
         FrameLayout videoContainer = findViewById(containerID);
         videoContainer.removeAllViews();
     }
+    private void onRemoteUserVideoToggle(int uid, int state) {
+        FrameLayout videoContainer = findViewById(R.id.bg_video_container);
+
+        SurfaceView videoSurface = (SurfaceView) videoContainer.getChildAt(0);
+        videoSurface.setVisibility(state == 0 ? View.GONE : View.VISIBLE);
+
+        // add an icon to let the other user know remote video has been disabled
+        if(state == 0){
+            ImageView noCamera = new ImageView(this);
+            noCamera.setImageResource(R.drawable.video_disabled);
+            videoContainer.addView(noCamera);
+        } else {
+            ImageView noCamera = (ImageView) videoContainer.getChildAt(1);
+            if(noCamera != null) {
+                videoContainer.removeView(noCamera);
+            }
+        }
+    }
+
+    private void setupRemoteVideoStream(int uid) {
+        FrameLayout videoContainer = findViewById(R.id.bg_video_container);
+        SurfaceView videoSurface = RtcEngine.CreateRendererView(getBaseContext());
+        videoContainer.addView(videoSurface);
+        mRtcEngine.setupRemoteVideo(new VideoCanvas(videoSurface, VideoCanvas.RENDER_MODE_FIT, uid));
+        mRtcEngine.setRemoteSubscribeFallbackOption(io.agora.rtc.Constants.STREAM_FALLBACK_OPTION_AUDIO_ONLY);
+    }
+    //user authentication
+    //chat rooms
+    //screen sharing
 }
