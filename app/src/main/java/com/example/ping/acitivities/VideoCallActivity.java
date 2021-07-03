@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -165,10 +166,10 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
         super.onCreate(savedInstanceState);
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ActionBar ab = getSupportActionBar();
+        /*ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.hide();
-        }
+        }*/
         setContentView(R.layout.activity_video_call);
         getExtras();
         initUI();
@@ -242,12 +243,17 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
 
         //listen to the friend list in the database
         mRef.push();
+        /*if (userName.equals("")||userName==null)
+        {
+            userName="Salsiii";
+        }*/
         mRef.child(this.userName).child("friend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DBFriend = (List<String>) dataSnapshot.getValue();
                 if (DBFriend == null) {
                     DBFriend = new ArrayList<>();
+                    DBFriend.add("saloni@123");
                 }
             }
 
@@ -324,7 +330,16 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
 
     private void joinChannel() {
         // Join a channel with a token, token can be null.
-        mRtcEngine.joinChannel(null, channelName, "Extra Optional Data", 0);
+        String token = getString(R.string.agora_access_token);
+        if (TextUtils.isEmpty(token) || TextUtils.equals(token, "s")) {
+            token = null; // default, no token
+        }
+       /* if (TextUtils.isEmpty(token)) { // ||  TextUtils.equals(token, R.string.agora_access_token)
+            token = null; // default, no token
+        }*/
+        mRtcEngine.joinChannel(token, "demoChannel1", "Extra Optional Data", 0);
+        //mRtcEngine.joinChannel(token, "demoChannel1", "Extra Optional Data", 0);
+       // mRtcEngine.joinChannel(null, channelName, "Extra Optional Data", 0);
     }
 
     private boolean checkSelfPermission(String permission, int requestCode) {

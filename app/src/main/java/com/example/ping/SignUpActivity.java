@@ -42,7 +42,8 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "User Name cannot be empty", Toast.LENGTH_SHORT).show();
         }else {
             //Intent intent = new Intent(this, BasicVideoCall.class);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
+            //Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("userName", userName);
             startActivity(intent);
         }

@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -176,7 +177,12 @@ public class BasicVideoCall extends AppCompatActivity {
     }
 
     public void onJoinChannelClicked(View view) {
-        mRtcEngine.joinChannel(null, "test-channel", "Extra Optional Data", 0);
+        String token = getString(R.string.agora_access_token);
+        if (TextUtils.isEmpty(token)) { // ||  TextUtils.equals(token, R.string.agora_access_token)
+            token = null; // default, no token
+        }
+        mRtcEngine.joinChannel(token, "demoChannel1", "Extra Optional Data", 0);
+        /*mRtcEngine.joinChannel(null, "test-channel", "Extra Optional Data", 0);*/
         setupLocalVideoFeed();
         findViewById(R.id.joinBtn).setVisibility(View.GONE); // set the join button hidden
         findViewById(R.id.audioBtn).setVisibility(View.VISIBLE); // set the audio button hidden

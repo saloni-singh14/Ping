@@ -43,7 +43,9 @@ public class SignInActivity extends AppCompatActivity {
         if (user!=null)
         {
 
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            //Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
+            Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
+            //Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
             intent.putExtra("userName", name);
             startActivity(intent);
 
@@ -105,7 +107,8 @@ public class SignInActivity extends AppCompatActivity {
         }else {
             //Intent intent = new Intent(this, BasicVideoCall.class);
             //Intent intent = new Intent(this, MainActivity.class);
-            Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+            //Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+            Intent intent = new Intent(getApplicationContext(), PhoneNumberActivity.class);
            // Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("userName", name);
             startActivity(intent);
@@ -149,7 +152,10 @@ public class SignInActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user!=null)
                             {
-                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                               // Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                //Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
+                                Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
+                                //Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
                                 intent.putExtra("userName", "yolo");
                                 startActivity(intent);
                             }
