@@ -3,6 +3,8 @@ package com.example.ping;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -21,10 +23,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class OTPActivity extends AppCompatActivity {
     ActivityOtpactivityBinding binding;
     FirebaseAuth auth;
     String verificationID;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +39,37 @@ public class OTPActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         String phoneNumber=getIntent().getStringExtra("phoneNumber");
         binding.phoneLbl.setText("Verify "+phoneNumber);
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Sending OTP...");
+        dialog.setCancelable(false);
+        dialog.show();
+
         PhoneAuthOptions options=PhoneAuthOptions.newBuilder(auth)
                 .setPhoneNumber(phoneNumber)
-                .setTimeout(180L, TimeUnit.SECONDS)
+                .setTimeout(120L, TimeUnit.SECONDS)
                 .setActivity(OTPActivity.this)
                 .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     @Override
                     public void onVerificationCompleted(@NonNull @NotNull PhoneAuthCredential phoneAuthCredential) {
 
                     }
+
+
                     @Override
                     public void onVerificationFailed(@NonNull @NotNull FirebaseException e) {
+                        Toast.makeText(getApplicationContext(),"Error! "+ e.getMessage()+"Please check your internet connection",Toast.LENGTH_SHORT).show();
 
                     }
                     @Override
                     public void onCodeSent(@NonNull @NotNull String verifyID, @NonNull @NotNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         super.onCodeSent(verifyID, forceResendingToken);
+                        dialog.dismiss();
                         verificationID=verifyID;
                     }
 
                 }).build();
-        PhoneAuthProvider.verifyPhoneNumber(options);
+          PhoneAuthProvider.verifyPhoneNumber(options);
         binding.otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
             @Override
             public void onOtpCompleted(String otp) {
@@ -65,6 +80,9 @@ public class OTPActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             Toast.makeText(getApplicationContext(),"Phone number verified!",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(OTPActivity.this,SetupProfileActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                         else {
                             Toast.makeText(getApplicationContext(),"Verification Failed. Please try again",Toast.LENGTH_SHORT).show();
@@ -74,5 +92,11 @@ public class OTPActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
+    /*@Override
+    public void onStop() {
+        super.onStop();
+        finish();
+    }*/
 }

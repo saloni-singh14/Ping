@@ -39,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         EditText userEmail = findViewById(R.id.editTextEmail);
         String email = userEmail.getText().toString();
         if(userName.equals("")) {
-            Toast.makeText(this, "User Name cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "com.example.ping.User Name cannot be empty", Toast.LENGTH_SHORT).show();
         }else {
             //Intent intent = new Intent(this, BasicVideoCall.class);
             Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);

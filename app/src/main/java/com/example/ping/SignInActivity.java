@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ping.acitivities.SplashActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -46,7 +46,7 @@ public class SignInActivity extends AppCompatActivity {
             //Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
             Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
             //Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
-            intent.putExtra("userName", name);
+            //intent.putExtra("userName", name);
             startActivity(intent);
 
         }
@@ -110,7 +110,7 @@ public class SignInActivity extends AppCompatActivity {
             //Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
             Intent intent = new Intent(getApplicationContext(), PhoneNumberActivity.class);
            // Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("userName", name);
+            //intent.putExtra("userName", name);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
         }
@@ -156,7 +156,7 @@ public class SignInActivity extends AppCompatActivity {
                                 //Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
                                 Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
                                 //Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
-                                intent.putExtra("userName", "yolo");
+                                //intent.putExtra("userName", "yolo");
                                 startActivity(intent);
                             }
                         } else {
