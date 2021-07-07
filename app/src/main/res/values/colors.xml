@@ -46,7 +46,9 @@
 
     <color name="transparent_75_white">#ACFFFFFF</color>
     <color name="grey">#AFAFAA</color>
-    <color name="darkBlue">#02087A</color>
+    <color name="darkBlue">#3F51B5</color>
     <color name="greenDark">#2E7C31</color>
+    <color name="spaceBlue">#040E49</color>
+
 
 </resources>

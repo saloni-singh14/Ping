@@ -22,7 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SetupProfileActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SetupProfileActivity" />
         <activity
             android:name=".OTPActivity"
             android:windowSoftInputMode="stateVisible" />

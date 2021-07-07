@@ -11,10 +11,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.ping.databinding.ActivityPhoneNumberBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class PhoneNumberActivity extends AppCompatActivity {
 
     ActivityPhoneNumberBinding binding;
+    FirebaseAuth auth;
 
 
     @Override
@@ -23,6 +25,17 @@ public class PhoneNumberActivity extends AppCompatActivity {
         binding=ActivityPhoneNumberBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.phoneBox.requestFocus();
+        //getSupportActionBar().hide();
+
+        auth = FirebaseAuth.getInstance();
+
+        if(auth.getCurrentUser() != null) {
+            Intent intent = new Intent(PhoneNumberActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        getSupportActionBar().hide();
 
 
         binding.continueBtn.setOnClickListener(new View.OnClickListener() {

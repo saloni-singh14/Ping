@@ -86,7 +86,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         dialog.dismiss();
-                                                        Intent intent = new Intent(SetupProfileActivity.this, BasicVideoCall.class);
+                                                        Intent intent = new Intent(SetupProfileActivity.this, MainActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     }
@@ -110,7 +110,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     dialog.dismiss();
-                                    Intent intent = new Intent(SetupProfileActivity.this, BasicVideoCall.class);
+                                    Intent intent = new Intent(SetupProfileActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.ping.databinding.ActivityOtpactivityBinding;
@@ -14,15 +15,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.mukesh.OnOtpCompletionListener;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
+import static android.content.ContentValues.TAG;
 import static android.widget.Toast.LENGTH_LONG;
 
 public class OTPActivity extends AppCompatActivity {
@@ -80,20 +89,52 @@ public class OTPActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             Toast.makeText(getApplicationContext(),"Phone number verified!",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(OTPActivity.this,SetupProfileActivity.class);
-                            startActivity(intent);
-                            finish();
+                            FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                            String userID=user.getUid();
+                            String tag="-1000";
+                            Log.d(tag,"User ID is: "+userID);
+                            Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("uid").equalTo(userID);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getChildrenCount() > 0) {
+                                        Log.d(tag,"User already exists");
+                                        Intent intent = new Intent(OTPActivity.this,MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                        // 1 or more users exist which have the username property "usernameToCheckIfExists"
+                                    }
+                                    else{
+                                        Log.d(tag,"User does not exist");
+                                        Intent intent = new Intent(OTPActivity.this,SetupProfileActivity.class);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+
+                                }
+                            });
+
                         }
                         else {
                             Toast.makeText(getApplicationContext(),"Verification Failed. Please try again",Toast.LENGTH_SHORT).show();
                         }
 
                     }
+
+
                 });
             }
         });
 
     }
+
+
     /*@Override
     public void onStop() {
         super.onStop();
