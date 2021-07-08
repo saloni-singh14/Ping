@@ -70,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
         dialog.setCancelable(false);
 
         messages = new ArrayList<>();
-
+        ///We set the name and profile image of message receiver in Chat Activity
 
         String name = getIntent().getStringExtra("name");
         String profile = getIntent().getStringExtra("image");
@@ -80,7 +80,8 @@ public class ChatActivity extends AppCompatActivity {
                 .placeholder(R.drawable.avatar)
                 .into(binding.profile);
 
-        binding.imageView2.setOnClickListener(new View.OnClickListener() {
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            ///On click for back button. Returns to previous activity. Finishes Chat Activity
             @Override
             public void onClick(View v) {
                 finish();
@@ -229,6 +230,8 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        ///OnActivityResult manages the case where we send images in the chat
+        ///data here is the local Url of the image selected
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 25) {
@@ -252,7 +255,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                         Date date = new Date();
                                         Message message = new Message(messageTxt, senderUid, date.getTime());
-                                        message.setMessage("photo");
+                                        message.setMessage("Photo");
                                         message.setImageUrl(filePath);
                                         binding.messageBox.setText("");
                                         ///@param randomKey: push() generates a unique key(or node) every time a new child is added

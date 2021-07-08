@@ -245,6 +245,9 @@ public class MainActivity extends AppCompatActivity {
             /*case R.id.group:
                 startActivity(new Intent(MainActivity.this, GroupChatActivity.class));
                 break;*/
+            case R.id.settings:
+                OnSettingsClicked();
+                 break;
             case R.id.search:
                 Toast.makeText(this, "Search clicked.", Toast.LENGTH_SHORT).show();
                 break;
@@ -254,6 +257,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void OnSettingsClicked() {
+        Intent intent = new Intent(getApplicationContext(),SetupProfileActivity.class);
+        startActivity(intent);
     }
 
     private void OnLogoutClicked(FirebaseAuth auth) {

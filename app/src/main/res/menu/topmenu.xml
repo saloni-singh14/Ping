@@ -11,8 +11,8 @@
         android:id="@+id/group"
         android:title="Groups" />
     <item
-        android:id="@+id/invite"
-        android:title="Invite" />
+        android:id="@+id/settings"
+        android:title="Settings" />
     <item
         android:id="@+id/Logout"
         android:title="Logout" />

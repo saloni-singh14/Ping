@@ -8,29 +8,42 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.example.ping.databinding.ActivitySetupProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
 
 public class SetupProfileActivity extends AppCompatActivity {
 
+    private static final String TAG = "-1000";
     ActivitySetupProfileBinding binding;
     FirebaseAuth auth;
     FirebaseDatabase database;
     FirebaseStorage storage;
     Uri selectedImage;
     ProgressDialog dialog;
+    boolean settingUpdate=false;
+
 
 
     @Override
@@ -47,7 +60,7 @@ public class SetupProfileActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
-
+        settingUpdate=isUpdate(auth);
 
 
         binding.continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +75,8 @@ public class SetupProfileActivity extends AppCompatActivity {
 
                 dialog.show();
                 if(selectedImage != null) {
+                    //setProfileImage(storage,selectedImage);
+                    ///We are using Cloud storage for storing and retrieving Profile Image
                     StorageReference reference = storage.getReference().child("Profiles").child(auth.getUid());
                     reference.putFile(selectedImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -71,29 +86,67 @@ public class SetupProfileActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         String imageUrl = uri.toString();
+                                        storeImageinDatabase(uri,settingUpdate);
 
-                                        String uid = auth.getUid();
-                                        String phone = auth.getCurrentUser().getPhoneNumber();
-                                        String name = binding.nameBox.getText().toString();
-
-                                        User user = new User(uid, name, phone, imageUrl);
-
-                                        database.getReference()
-                                                .child("users")
-                                                .child(uid)
-                                                .setValue(user)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        dialog.dismiss();
-                                                        Intent intent = new Intent(SetupProfileActivity.this, MainActivity.class);
-                                                        startActivity(intent);
-                                                        finish();
-                                                    }
-                                                });
                                     }
                                 });
                             }
+                        }
+
+                        private void storeImageinDatabase(Uri uri, boolean settingUpdate) {
+                            String imageUrl = uri.toString();
+                            String uid = auth.getUid();
+                            String phone = auth.getCurrentUser().getPhoneNumber();
+                            if (phone.equals("")||phone==null)
+                            {
+                                phone="No phone";
+                            }
+                            String name = binding.nameBox.getText().toString();
+
+
+                            if (settingUpdate!=true)
+                            {
+                                User user = new User(uid, name, phone, imageUrl);
+                                database.getReference()
+                                        .child("users")
+                                        .child(uid)
+                                        .setValue(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                dialog.dismiss();
+                                                Intent intent = new Intent(SetupProfileActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+                            }
+                            else
+                            {
+                                database.getReference()
+                                        .child("users")
+                                        .child(uid)
+                                        .child("name")
+                                        .setValue(name);
+                                database.getReference()
+                                        .child("users")
+                                        .child(uid)
+                                        .child("profileImage")
+                                        .setValue(imageUrl)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                dialog.dismiss();
+                                                Intent intent = new Intent(SetupProfileActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+
+                                            }
+                                        });
+                            }
+
+
+
                         }
                     });
                 } else {
@@ -116,6 +169,61 @@ public class SetupProfileActivity extends AppCompatActivity {
                                 }
                             });
                 }
+
+            }
+        });
+    }
+
+    private boolean isUpdate(FirebaseAuth auth) {
+        final boolean[] returnValue = {false};
+        FirebaseUser user=auth.getCurrentUser();
+        String userID=user.getUid();
+        Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("uid").equalTo(userID);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() > 0) {
+                    ///User already exists, which means this is a case of updation
+                    ///We will set name and change avatar to current data
+                    database = FirebaseDatabase.getInstance();
+                    setImageAndText(database,userID);
+                    returnValue[0] =true;
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+
+            }
+        });
+        return returnValue[0];
+
+
+    }
+
+    private void setImageAndText(FirebaseDatabase database, String userID) {
+        database.getReference().child("users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                User user=snapshot.getValue(User.class);
+                String name = user.getName();
+                String profile = user.getProfileImage();
+                binding.nameBox.setText(name);
+                Log.d(TAG,profile + " is the image");
+                Glide.with(getApplicationContext()).load(profile).
+                        placeholder(R.drawable.avatar)
+                        .into(binding.imageView);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                Log.d(TAG, "User already exists");
 
             }
         });

@@ -136,7 +136,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             /// of type SentViewHolder
             SentViewHolder viewHolder = (SentViewHolder)holder;
 
-            if(message.getMessage().equals("photo")) {
+            if(message.getMessage().equals("Photo")) {
                 viewHolder.binding.image.setVisibility(View.VISIBLE);
                 viewHolder.binding.message.setVisibility(View.GONE);
                 Glide.with(context)
@@ -229,7 +229,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             });
         } else {
             ReceiverViewHolder viewHolder = (ReceiverViewHolder)holder;
-            if(message.getMessage().equals("photo")) {
+            if(message.getMessage().equals("Photo")) {
                 viewHolder.binding.image.setVisibility(View.VISIBLE);
                 viewHolder.binding.message.setVisibility(View.GONE);
                 Glide.with(context)
