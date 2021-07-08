@@ -27,6 +27,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import static android.content.ContentValues.TAG;
 
 
 public class SignInActivity extends AppCompatActivity {
@@ -42,10 +49,7 @@ public class SignInActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user!=null)
         {
-
-            //Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
             Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
-            //Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
             //intent.putExtra("userName", name);
             startActivity(intent);
 
@@ -105,11 +109,9 @@ public class SignInActivity extends AppCompatActivity {
         if(name.equals("")) {
             Toast.makeText(this, "user name cannot be empty", Toast.LENGTH_SHORT).show();
         }else {
-            //Intent intent = new Intent(this, BasicVideoCall.class);
-            //Intent intent = new Intent(this, MainActivity.class);
-            //Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+
             Intent intent = new Intent(getApplicationContext(), PhoneNumberActivity.class);
-           // Intent intent = new Intent(this, MainActivity.class);
+
             //intent.putExtra("userName", name);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
@@ -149,25 +151,60 @@ public class SignInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
+
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user!=null)
                             {
-                               // Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                //Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
-                                Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
-                                //Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
-                                //intent.putExtra("userName", "yolo");
-                                startActivity(intent);
+                                ///If user has already made an account, he will be directed to the ChatActivity.
+                                ///Otherwise he will be directed to SetUpProfile Activity
+                                sendUsertoActivity(user);
                             }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(SignInActivity.this,"Google sign-in failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this,"Google sign-in failed. Try signing in through phone number",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
+    private void sendUsertoActivity(FirebaseUser user) {
+        ///<summary>
+        ///
+        /// Is user has already created a profile, then send him to Chat Activity, else send him to
+        ///SetupProfile Activity
+        ///@param user: gives userID from FirebaseAuth, and if the user has created a profile
+        ///then userID from auth will exist in Firebase Database, else, we have to set up profile
+        ///and store data
+        ///</summary>
+        String userID = user.getUid();
+        Toast.makeText(getApplicationContext(),"Sign In Success!",Toast.LENGTH_SHORT).show();
+        Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("uid").equalTo(userID);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() > 0) {
+                    Log.d(TAG, "User already exists");
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    // 1 or more users exist which have the username property "usernameToCheckIfExists"
+                } else {
+                    Log.d(TAG, "User does not exist");
+                    Intent intent = new Intent(SignInActivity.this, SetupProfileActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+
+            }
+        });
+    }
 
 
 }

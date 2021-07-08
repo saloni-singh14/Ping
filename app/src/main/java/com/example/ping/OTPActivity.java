@@ -82,62 +82,50 @@ public class OTPActivity extends AppCompatActivity {
         binding.otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
             @Override
             public void onOtpCompleted(String otp) {
-                PhoneAuthCredential credential=PhoneAuthProvider.getCredential(verificationID,otp);
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, otp);
                 auth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
-                        if (task.isSuccessful())
-                        {
-                            Toast.makeText(getApplicationContext(),"Phone number verified!",Toast.LENGTH_SHORT).show();
-                            FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-                            String userID=user.getUid();
-                            String tag="-1000";
-                            Log.d(tag,"User ID is: "+userID);
-                            Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("uid").equalTo(userID);
-                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.getChildrenCount() > 0) {
-                                        Log.d(tag,"User already exists");
-                                        Intent intent = new Intent(OTPActivity.this,MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                        // 1 or more users exist which have the username property "usernameToCheckIfExists"
-                                    }
-                                    else{
-                                        Log.d(tag,"User does not exist");
-                                        Intent intent = new Intent(OTPActivity.this,SetupProfileActivity.class);
-                                        startActivity(intent);
-                                        finish();
-
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-
-                                }
-                            });
-
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Phone number verified!", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            sendUsertoActivity(user);
                         }
-                        else {
-                            Toast.makeText(getApplicationContext(),"Verification Failed. Please try again",Toast.LENGTH_SHORT).show();
-                        }
-
                     }
-
-
                 });
             }
+            });
+
+
+
+}
+    private void sendUsertoActivity(FirebaseUser user) {
+        String userID = user.getUid();
+        Toast.makeText(getApplicationContext(),"Sign In Success!",Toast.LENGTH_SHORT).show();
+        Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("uid").equalTo(userID);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() > 0) {
+                    Log.d(TAG, "User already exists");
+                    Intent intent = new Intent(OTPActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    // 1 or more users exist which have the username property "usernameToCheckIfExists"
+                } else {
+                    Log.d(TAG,"User does not exist");
+                    Intent intent = new Intent(OTPActivity.this,SetupProfileActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+
+            }
         });
-
     }
-
-
-    /*@Override
-    public void onStop() {
-        super.onStop();
-        finish();
-    }*/
 }
