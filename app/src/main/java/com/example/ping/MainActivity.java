@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "-1000";
     ActivityMainBinding binding;
     FirebaseDatabase database;
     ArrayList<User> users;
@@ -89,8 +91,27 @@ public class MainActivity extends AppCompatActivity {
                 users.clear();
                 for(DataSnapshot snapshot1 : snapshot.getChildren()) {
                     User user = snapshot1.getValue(User.class);
-                    if(!user.getUid().equals(FirebaseAuth.getInstance().getUid()))
-                        users.add(user);
+                    if(user==null)
+                    {
+
+                        Log.d(TAG,"User is null");
+
+                    }
+                    else if(FirebaseAuth.getInstance().getCurrentUser().getUid()==null)
+                    {
+                        Log.d(TAG,"FirebaseAuth returns null");
+                    }
+                    else if(user.getUid()==null)
+                    {
+                        Log.d(TAG,"User ID is null");
+                    }
+                    else
+                    {
+                        //if(FirebaseAuth.getInstance().getCurrentUser().getUid()!=null)
+                        if(!user.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                            users.add(user);
+                    }
+
                 }
                 binding.recyclerView.hideShimmerAdapter();
                 usersAdapter.notifyDataSetChanged();

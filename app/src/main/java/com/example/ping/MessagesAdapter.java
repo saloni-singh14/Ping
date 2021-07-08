@@ -93,12 +93,20 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             if(holder.getClass() == SentViewHolder.class) {
                 ///If the holder is
                 SentViewHolder viewHolder = (SentViewHolder)holder;
-                viewHolder.binding.feeling.setImageResource(reactions[pos]);
-                viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                if(pos>=0)
+                {
+                    viewHolder.binding.feeling.setImageResource(reactions[pos]);
+                    viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                }
+
             } else {
                 ReceiverViewHolder viewHolder = (ReceiverViewHolder)holder;
-                viewHolder.binding.feeling.setImageResource(reactions[pos]);
-                viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                if (pos>=0)
+                {
+                    viewHolder.binding.feeling.setImageResource(reactions[pos]);
+                    viewHolder.binding.feeling.setVisibility(View.VISIBLE);
+                }
+
 
 
             }
