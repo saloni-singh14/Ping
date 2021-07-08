@@ -4,6 +4,7 @@
 
     <item
         android:icon="@drawable/ic_video"
+        android:onClick="onVideoCallClick"
         android:title="Video Call"
         app:showAsAction="always" />
     <item

@@ -255,7 +255,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     String filePath = uri.toString();
                                     HashMap<String, Object> obj = new HashMap<>();
-                                    obj.put("image", filePath);
+                                    obj.put("profileImage", filePath);
                                     database.getReference().child("users")
                                             .child(FirebaseAuth.getInstance().getUid())
                                             .updateChildren(obj).addOnSuccessListener(new OnSuccessListener<Void>() {

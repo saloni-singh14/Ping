@@ -18,8 +18,8 @@
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
 
-    <string name="agora_app_id">127958caccae4288a61f53fb8ca8a821</string>
-    <string name="agora_access_token">006127958caccae4288a61f53fb8ca8a821IAD7TrcGkl4KTyJt3kWUsjN/73IYZE8jOhGTdykudc+n3uIVUyEAAAAAEACqPfBqr8jdYAEAAQCuyN1g</string>
+    <string name="agora_app_id">155f3902b8a14fcd821074c95d06b2b3</string>
+
 
     <string name="account_cannot_be_yourself">Account can not be yourself</string>
     <string name="account_empty">Account can not be empty</string>

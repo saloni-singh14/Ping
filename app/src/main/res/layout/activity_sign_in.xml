@@ -15,10 +15,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
+        android:background="@drawable/dark_light_stars"
         android:paddingTop="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="vertical"
             android:padding="20dp">
             <RelativeLayout
@@ -28,6 +30,8 @@
                     style="@style/viewParent.headerText.NoMode"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textColor="@color/themeColor"
                     android:text="Already \nhave an \nAccount?" />
                 <ImageView
                     android:layout_width="wrap_content"
@@ -44,6 +48,7 @@
                     android:id="@+id/editTextUsername"
                     style="@style/modifiedEditText"
                     android:hint="@string/username"
+                    android:fontFamily="@font/montserrat_regular"
                     android:inputType="text"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -55,6 +60,7 @@
                     android:id="@+id/editTextPassword"
                     style="@style/modifiedEditText"
                     android:hint="@string/login_password_hint"
+                    android:fontFamily="@font/montserrat_regular"
                     android:inputType="textPassword"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>

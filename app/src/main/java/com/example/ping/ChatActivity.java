@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -325,5 +326,10 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    public void onVideoCallClick(MenuItem item) {
+        Intent intent=new Intent(getApplicationContext(),BasicVideoCall.class);
+        startActivity(intent);
     }
 }

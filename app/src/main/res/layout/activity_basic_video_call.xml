@@ -9,9 +9,10 @@
         android:id="@+id/bg_video_container"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light"
+        android:background="@drawable/chat_bg_planets"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 

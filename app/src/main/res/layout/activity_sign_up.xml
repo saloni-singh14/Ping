@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/register_bk_color"
+    android:background="@drawable/dark_light_stars"
     android:focusableInTouchMode="true"
+
     android:gravity="center"
     tools:context=".SignUpActivity">
     <ScrollView
@@ -26,8 +27,9 @@
                     style="@style/viewParent.headerText.NoMode"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:fontFamily="@font/montserrat_regular"
                     android:text="Here’s\nyour first\nstep with \nus! "
-                    android:textColor="@color/whiteTextColor" />
+                    android:textColor="@color/themeColor" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -39,19 +41,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/whiteTextColor"
+                app:cardBackgroundColor="@color/spaceBlue"
                 app:cardCornerRadius="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+
                     android:orientation="vertical">
                     <com.google.android.material.textfield.TextInputLayout
+
                         android:id="@+id/textInputName"
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <EditText
+                            android:fontFamily="@font/montserrat_regular"
                             android:id="@+id/editTextName"
                             style="@style/modifiedEditText"
                             android:background="@color/colorHintText"
@@ -67,6 +72,7 @@
                             android:id="@+id/editTextEmail"
                             style="@style/modifiedEditText"
                             android:hint="@string/login_email_hint"
+                            android:fontFamily="@font/montserrat_regular"
                             android:inputType="textEmailAddress"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -78,6 +84,7 @@
                             android:id="@+id/editTextPassword"
                             style="@style/modifiedEditText"
                             android:hint="Password"
+                            android:fontFamily="@font/montserrat_regular"
                             android:inputType="textPassword"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +95,7 @@
                         <EditText
                             android:id="@+id/editTextConfirmPassword"
                             style="@style/modifiedEditText"
+                            android:fontFamily="@font/montserrat_regular"
                             android:hint="Confirm Password"
                             android:inputType="textPassword"
                             android:maxLines="1" />
@@ -98,6 +106,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:text="Register"
+                        android:fontFamily="@font/montserrat_regular"
                         android:onClick="onRegisterClick"
                         app:initialCornerAngle="27dp"
                         app:spinning_bar_color="#FFF"
@@ -107,6 +116,7 @@
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:onClick="onLoginClick"
+                        android:fontFamily="@font/montserrat_regular"
                         android:text="Already have an account?"
                         android:textAlignment="center"
                         android:textColor="@color/themeColor"
@@ -132,6 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:text="Use other Methods"
+                    android:fontFamily="@font/montserrat_regular"
                     android:textAlignment="center"
                     android:textColor="@color/whiteTextColor"
                     android:textSize="12sp"
@@ -152,11 +163,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_facebook" />
-                <ImageView
+                <com.google.android.gms.common.SignInButton
+
+                    android:id="@+id/googleSignInButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/google" />
+                    android:layout_marginLeft="10dp" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
