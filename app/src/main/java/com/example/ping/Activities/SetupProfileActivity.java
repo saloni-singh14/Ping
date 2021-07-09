@@ -98,7 +98,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                             String imageUrl = uri.toString();
                             String uid = auth.getUid();
                             String phone = auth.getCurrentUser().getPhoneNumber();
-                            if (phone.equals("")||phone==null)
+                            if (phone==null||phone.equals(""))
                             {
                                 phone="No phone";
                             }

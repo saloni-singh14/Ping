@@ -45,11 +45,11 @@
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin">
                 <EditText
-                    android:id="@+id/editTextUsername"
+                    android:id="@+id/editTextEmail"
                     style="@style/modifiedEditText"
-                    android:hint="@string/username"
+                    android:hint="@string/email"
                     android:fontFamily="@font/montserrat_regular"
-                    android:inputType="text"
+                    android:inputType = "textEmailAddress"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -109,6 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
+                    android:textColor="@color/themeColor"
                     android:text="Use other Methods"
                     android:textAlignment="center"
                     android:textSize="12sp"
@@ -124,16 +125,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_facebook" />
 
-               <!-- <ImageView
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/google" />-->
+
+                    android:height="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp" />
+
                 <com.google.android.gms.common.SignInButton
 
                     android:id="@+id/googleSignInButton"

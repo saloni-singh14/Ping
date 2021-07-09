@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -504,6 +505,7 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
     private void leaveChannel() {
         // Leave the current channel.
         mRtcEngine.leaveChannel();
+
     }
 
     public void onLockRoomClick(View view) {
@@ -779,6 +781,9 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
     }
 
     public void onEndCallClicked(View view) {
+        leaveChannel();
+        Intent intent = new Intent(VideoCallActivity.this,MainActivity.class);
+        startActivity(intent);
 
     }
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+
     android:background="@drawable/dark_light_stars"
     android:focusableInTouchMode="true"
 
@@ -12,12 +13,16 @@
     tools:context=".Activities.SignUpActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/dark_light_stars"
+        android:paddingTop="20dp"
         android:layout_alignParentTop="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+
             android:orientation="vertical"
             android:padding="20dp">
             <RelativeLayout
@@ -49,21 +54,7 @@
                     android:layout_margin="10dp"
 
                     android:orientation="vertical">
-                    <com.google.android.material.textfield.TextInputLayout
 
-                        android:id="@+id/textInputName"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:fontFamily="@font/montserrat_regular"
-                            android:id="@+id/editTextName"
-                            style="@style/modifiedEditText"
-                            android:background="@color/colorHintText"
-                            android:hint="Name"
-                            android:inputType="textPersonName"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputEmail"
                         style="@style/parent"
@@ -159,15 +150,21 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
                 android:gravity="center">
-                <ImageView
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_facebook" />
+
+                    android:height="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp" />
+
                 <com.google.android.gms.common.SignInButton
 
                     android:id="@+id/googleSignInButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onGoogleSignClicked"
                     android:layout_marginLeft="10dp" />
 
             </LinearLayout>
