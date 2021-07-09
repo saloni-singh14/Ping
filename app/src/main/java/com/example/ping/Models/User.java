@@ -1,7 +1,11 @@
-package com.example.ping;
+package com.example.ping.Models;
+
+import java.util.List;
 
 public class User {
     private String uid, name, phoneNumber, profileImage;
+
+
 
     public User() {
 
@@ -12,6 +16,7 @@ public class User {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profileImage = profileImage;
+
     }
 
     public String getUid() {
@@ -45,4 +50,5 @@ public class User {
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
+
 }

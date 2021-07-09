@@ -22,19 +22,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatActivity"></activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SetupProfileActivity" />
+        <activity android:name=".Activities.VideoCallActivity"></activity>
+        <activity android:name=".Activities.ChatActivity" />
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.SetupProfileActivity" />
         <activity
-            android:name=".OTPActivity"
+            android:name=".Activities.OTPActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".PhoneNumberActivity"
+            android:name=".Activities.PhoneNumberActivity"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".ChannelSelection" />
-        <activity android:name=".BasicVideoCall" />
+        <activity android:name=".Activities.ChannelSelection" />
+        <activity android:name=".Activities.BasicVideoCall" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".Activities.SignInActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -44,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
     </application>

@@ -1,4 +1,4 @@
-package com.example.ping;
+package com.example.ping.Models;
 
 public class Message {
     private String messageId, message, senderId, imageUrl;

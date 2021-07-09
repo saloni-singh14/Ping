@@ -1,20 +1,17 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-
+import com.example.ping.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -33,8 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import static android.content.ContentValues.TAG;
-
 
 public class SignInActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
@@ -49,7 +44,7 @@ public class SignInActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user!=null)
         {
-            Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
+            Intent intent = new Intent(getApplicationContext(), PhoneNumberActivity.class);
             //intent.putExtra("userName", name);
             startActivity(intent);
 
@@ -96,7 +91,7 @@ public class SignInActivity extends AppCompatActivity {
    
 
     public void onNewClick(View View){
-        startActivity(new Intent(this,SignUpActivity.class));
+        startActivity(new Intent(this, SignUpActivity.class));
         overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
 
     }

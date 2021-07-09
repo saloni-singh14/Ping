@@ -1,4 +1,4 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.example.ping.R;
+import com.example.ping.Models.User;
 import com.example.ping.databinding.ActivitySetupProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,7 +31,6 @@ import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
 

@@ -1,13 +1,13 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ping.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +33,7 @@ public class ChannelSelection extends AppCompatActivity {
     }
 
     public void onClickCall(View view) {
-        Intent intent = new Intent(getApplicationContext(),BasicVideoCall.class);
+        Intent intent = new Intent(getApplicationContext(), BasicVideoCall.class);
         startActivity(intent);
     }
 
@@ -42,7 +42,7 @@ public class ChannelSelection extends AppCompatActivity {
 
     public void onClickFinish(View view) {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getApplicationContext(),SignInActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(intent);
     }
 }

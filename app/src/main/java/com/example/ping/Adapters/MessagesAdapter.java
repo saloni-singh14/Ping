@@ -1,4 +1,4 @@
-package com.example.ping;
+package com.example.ping.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.ping.Models.Message;
+import com.example.ping.R;
 import com.example.ping.databinding.DeleteDialogBinding;
 import com.example.ping.databinding.ItemReceiveBinding;
 import com.example.ping.databinding.ItemSentBinding;

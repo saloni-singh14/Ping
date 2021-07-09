@@ -1,4 +1,4 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,29 +12,41 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import com.example.ping.Models.Message;
+import com.example.ping.Adapters.MessagesAdapter;
+import com.example.ping.Models.User;
+import com.example.ping.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.example.ping.databinding.ActivityChatBinding;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 public class ChatActivity extends AppCompatActivity {
     ActivityChatBinding binding;
@@ -329,7 +341,38 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void onVideoCallClick(MenuItem item) {
-        Intent intent=new Intent(getApplicationContext(),BasicVideoCall.class);
-        startActivity(intent);
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        String userID=user.getUid();
+        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        database.getReference().child("users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                User user=snapshot.getValue(User.class);
+                String name = user.getName();
+                sendToVideoCallActivity(name);
+
+
+            }
+
+            private void sendToVideoCallActivity(String userName) {
+                Intent intent=new Intent(ChatActivity.this,VideoCallActivity.class);
+                Toast.makeText(getApplicationContext(),"The username being sent from Chat Activity is "+userName,Toast.LENGTH_SHORT).show();
+                intent.putExtra("userName", userName);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                Log.d(TAG, "User already exists");
+
+            }
+        });
+
     }
-}
+
+
+
+    }
+

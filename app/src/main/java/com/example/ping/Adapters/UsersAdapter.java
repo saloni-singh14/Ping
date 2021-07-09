@@ -1,4 +1,4 @@
-package com.example.ping;
+package com.example.ping.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.ping.Activities.ChatActivity;
+import com.example.ping.R;
+import com.example.ping.Models.User;
 import com.example.ping.databinding.RowConversationBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

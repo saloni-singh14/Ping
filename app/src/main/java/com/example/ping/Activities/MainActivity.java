@@ -1,37 +1,30 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.ping.R;
+import com.example.ping.Models.User;
+import com.example.ping.Adapters.UsersAdapter;
 import com.example.ping.databinding.ActivityMainBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "-1000";
@@ -260,13 +253,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void OnSettingsClicked() {
-        Intent intent = new Intent(getApplicationContext(),SetupProfileActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SetupProfileActivity.class);
         startActivity(intent);
     }
 
     private void OnLogoutClicked(FirebaseAuth auth) {
         auth.signOut();
-        Intent intent=new Intent(MainActivity.this,SignInActivity.class);
+        Intent intent=new Intent(MainActivity.this, SignInActivity.class);
         startActivity(intent);
     }
 

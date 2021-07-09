@@ -1,4 +1,4 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.ping.Activities.PhoneNumberActivity;
+import com.example.ping.Activities.SignInActivity;
+import com.example.ping.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -29,7 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
     public void onLoginClick(View view){
-        startActivity(new Intent(this,SignInActivity.class));
+        startActivity(new Intent(this, SignInActivity.class));
         overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
 
@@ -39,10 +43,10 @@ public class SignUpActivity extends AppCompatActivity {
         EditText userEmail = findViewById(R.id.editTextEmail);
         String email = userEmail.getText().toString();
         if(userName.equals("")) {
-            Toast.makeText(this, "com.example.ping.User Name cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "com.example.ping.Models.User Name cannot be empty", Toast.LENGTH_SHORT).show();
         }else {
             //Intent intent = new Intent(this, BasicVideoCall.class);
-            Intent intent = new Intent(getApplicationContext(),PhoneNumberActivity.class);
+            Intent intent = new Intent(getApplicationContext(), PhoneNumberActivity.class);
             //Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("userName", userName);
             startActivity(intent);

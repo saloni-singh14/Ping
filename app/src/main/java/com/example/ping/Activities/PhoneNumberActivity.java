@@ -1,13 +1,10 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.ping.databinding.ActivityPhoneNumberBinding;
@@ -44,7 +41,7 @@ public class PhoneNumberActivity extends AppCompatActivity {
                 String phoneNo=(binding.phoneBox.getText().toString());
                 if (phoneNo.trim().length()==13)
                 {
-                    Intent intent=new Intent(getApplicationContext(),OTPActivity.class);
+                    Intent intent=new Intent(getApplicationContext(), OTPActivity.class);
                     intent.putExtra("phoneNumber",binding.phoneBox.getText().toString());
                     startActivity(intent);
                 }

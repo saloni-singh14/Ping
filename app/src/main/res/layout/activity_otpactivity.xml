@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/galaxy"
 
-    tools:context=".OTPActivity">
+    tools:context=".Activities.OTPActivity">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"

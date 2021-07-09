@@ -1,4 +1,4 @@
-package com.example.ping;
+package com.example.ping.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +21,6 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -32,7 +31,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.ContentValues.TAG;
-import static android.widget.Toast.LENGTH_LONG;
 
 public class OTPActivity extends AppCompatActivity {
     ActivityOtpactivityBinding binding;
@@ -108,13 +106,13 @@ public class OTPActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount() > 0) {
                     Log.d(TAG, "User already exists");
-                    Intent intent = new Intent(OTPActivity.this,MainActivity.class);
+                    Intent intent = new Intent(OTPActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     // 1 or more users exist which have the username property "usernameToCheckIfExists"
                 } else {
                     Log.d(TAG,"User does not exist");
-                    Intent intent = new Intent(OTPActivity.this,SetupProfileActivity.class);
+                    Intent intent = new Intent(OTPActivity.this, SetupProfileActivity.class);
                     startActivity(intent);
                     finish();
 
