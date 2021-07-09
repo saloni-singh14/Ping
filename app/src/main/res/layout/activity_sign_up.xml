@@ -77,7 +77,16 @@
                             android:hint="Password"
                             android:fontFamily="@font/montserrat_regular"
                             android:inputType="textPassword"
+                            android:tooltipText=""
                             android:maxLines="1" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:id="@+id/regex"
+                            android:textColor="@color/themeColor"
+                            android:text="Password must contain atleast 4 characters and 1 special character"
+                            ></TextView>
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputConfirmPassword"
@@ -148,24 +157,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center">
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OTP"
+                    android:textAlignment="center"
+                    android:textColor="@color/themeColor"
+                    android:drawableTop="@drawable/ic_phone_50"
+                    android:onClick="onPhoneClick"
+                    android:gravity="center_horizontal"></TextView>
+
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/fb_login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="top"
                     android:height="50dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp" />
+                    />
 
                 <com.google.android.gms.common.SignInButton
 
                     android:id="@+id/googleSignInButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onGoogleSignClicked"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_gravity="top"
+                    android:layout_marginLeft="20dp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -183,7 +203,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="11dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:adjustViewBounds="false"
         android:onClick="onLoginClick"
         app:srcCompat="@drawable/ic_back_img" />

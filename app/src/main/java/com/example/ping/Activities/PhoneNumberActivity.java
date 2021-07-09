@@ -39,7 +39,8 @@ public class PhoneNumberActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String phoneNo=(binding.phoneBox.getText().toString());
-                if (phoneNo.trim().length()==13)
+                phoneNo="+91"+phoneNo;
+                if (phoneNo.trim().length()==10)
                 {
                     Intent intent=new Intent(getApplicationContext(), OTPActivity.class);
                     intent.putExtra("phoneNumber",binding.phoneBox.getText().toString());

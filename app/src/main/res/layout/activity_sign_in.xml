@@ -10,7 +10,7 @@
     android:gravity="center"
     tools:context=".Activities.SignInActivity">
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -19,7 +19,7 @@
         android:paddingTop="20dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
 
             android:orientation="vertical"
             android:padding="20dp">
@@ -125,23 +125,44 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center">
+               <!-- <ImageView
+                    android:id="@+id/OtpSignIn"
+                    android:src="@drawable/ic_phone_50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
 
+                ></ImageView>-->
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OTP"
+                    android:textAlignment="center"
+                    android:textColor="@color/themeColor"
+                    android:onClick="onPhoneClick"
+                    android:drawableTop="@drawable/ic_phone_50"
+                    android:gravity="center_horizontal"></TextView>
 
                 <com.facebook.login.widget.LoginButton
+                    xmlns:fb="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/fb_login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
 
+
+                    android:layout_gravity="top"
                     android:height="50dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp" />
+                     />
 
                 <com.google.android.gms.common.SignInButton
-
                     android:id="@+id/googleSignInButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_gravity="top"
+
+                    android:layout_marginLeft="20dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -150,7 +171,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/ic_side_bg" />
     <ImageView
         android:layout_width="wrap_content"
@@ -158,7 +179,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="11dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:onClick="onNewClick"
         app:srcCompat="@drawable/ic_add_img" />
 </RelativeLayout>

@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.VideoCallActivity"></activity>
+        <activity android:name=".Activities.EmailVerifyActivity"></activity>
+        <activity android:name=".Activities.VideoCallActivity" />
         <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.SetupProfileActivity" />
@@ -48,8 +49,10 @@
             android:name=".Activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
     </application>
 
 </manifest>

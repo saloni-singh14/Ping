@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,6 +42,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
@@ -136,17 +139,86 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onRegisterClick(View view) {
 
-        EditText userEmail = findViewById(R.id.editTextEmail);
-        String email = userEmail.getText().toString();
-        /*if(userName.equals("")) {
-            Toast.makeText(this, "com.example.ping.Models.User Name cannot be empty", Toast.LENGTH_SHORT).show();
-        }else {
-            //Intent intent = new Intent(this, BasicVideoCall.class);
-            Intent intent = new Intent(getApplicationContext(), PhoneNumberActivity.class);
-            //Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("userName", userName);
-            startActivity(intent);
-        }*/
+        EditText editTextEmail;
+        EditText editTextPassword;
+        EditText editTextConfirmPassword;
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        boolean result = validateEmailPassword(email,password);
+        if (!password.equals(editTextConfirmPassword.getText().toString().trim()))
+        {
+            Toast.makeText(getApplicationContext(),"Passwords do not match",Toast.LENGTH_SHORT).show();
+        }
+        else if (result)
+        {
+            createAccount(email,password);
+        }
+    }
+
+    private void createAccount(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            /// Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            ///sendUsertoActivity(user);
+
+                            Intent intent = new Intent(getApplicationContext(),EmailVerifyActivity.class);
+                            startActivity(intent);
+                        } else {
+                            /// If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(SignUpActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+    }
+
+
+    private boolean validateEmailPassword(String email, String password) {
+        String emailRegex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
+        Pattern PASSWORD_PATTERN =
+                Pattern.compile("^" +
+                        "(?=.*[@#$%^&+=])" +     // at least 1 special character
+                        "(?=\\S+$)" +            // no white spaces
+                        ".{4,}" +                // at least 4 characters
+                        "$");
+
+        if (email.isEmpty()) {
+            //email.setError("Field can not be empty");
+            Toast.makeText(getApplicationContext(),"Email cannot be empty",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Matching the input email to a predefined email pattern
+        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            //email.setError("Please enter a valid email address");
+            Toast.makeText(getApplicationContext(),"Please enter a valid email address",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (password==null||password=="")
+        {
+            Toast.makeText(getApplicationContext(),"Password cannot be empty",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!PASSWORD_PATTERN.matcher(password).matches())
+        {
+            Toast.makeText(getApplicationContext(),"Password is too weak",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else {
+
+            return true;
+        }
+
     }
 
     public void onGoogleSignClicked(View view) {
@@ -242,5 +314,13 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void onPhoneClick(View view) {
+        Intent intent = new Intent(getApplicationContext(), PhoneNumberActivity.class);
+
+        //intent.putExtra("userName", name);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
     }
 }

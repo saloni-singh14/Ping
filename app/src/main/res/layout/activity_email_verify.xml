@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dark_light_stars"
-    tools:context=".Activities.PhoneNumberActivity">
+    tools:context=".Activities.EmailVerifyActivity">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
-        android:text="Verify your phone number"
+        android:text="Verify your Email"
         android:textAlignment="center"
         android:textColor="@color/themeColor"
         android:textSize="20sp"
@@ -40,16 +40,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Type your 10-digit phone number"
+        android:text="Type your phone number with country code. For e.g. +91"
         android:textSize="15sp"
-        android:textColor="@color/themeColor"
         app:layout_constraintEnd_toEndOf="@+id/phoneLbl"
         app:layout_constraintStart_toStartOf="@+id/phoneLbl"
         app:layout_constraintTop_toBottomOf="@+id/phoneLbl" />
 
 
     <androidx.cardview.widget.CardView
+
         android:background="@color/spaceBlue"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -65,27 +66,34 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/phoneBox"
+            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                android:id="@+id/resend_verification"
+                style="@style/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/textbox_outline"
-                android:ems="10"
-                android:hint="Phone number ex: 9777777700"
-                android:padding="10dp"
-                android:inputType="phone"/>
+                android:onClick="sendEmail"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_marginTop="10dp"
+                android:text="ReSEND verification email"
+                android:textSize="14sp"
+                app:initialCornerAngle="27dp"
+                app:spinning_bar_color="#FFF"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp" />
+
+
 
 
             <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                 android:id="@+id/continueBtn"
                 style="@style/loginButton"
-
+                android:onClick="onProceedClick"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Continue"
+                android:text="Proceed"
                 android:textSize="14sp"
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="#FFF"
