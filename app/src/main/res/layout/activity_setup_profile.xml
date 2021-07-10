@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/dark_light_stars"
     android:layout_height="match_parent"
     tools:context=".Activities.SetupProfileActivity">
     <de.hdodenhof.circleimageview.CircleImageView
@@ -14,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/icons8_male_user_90" />
+        android:src="@drawable/avatar" />
 
     <TextView
         android:id="@+id/phoneLbl"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Profile Info"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -37,6 +38,7 @@
         android:gravity="center"
         android:text="Please set your name and an optional profile image."
         android:textSize="12sp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/phoneLbl"
         app:layout_constraintStart_toStartOf="@+id/phoneLbl"
         app:layout_constraintTop_toBottomOf="@+id/phoneLbl" />

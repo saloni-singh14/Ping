@@ -39,7 +39,6 @@
         <activity
             android:name=".Activities.PhoneNumberActivity"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".Activities.ChannelSelection" />
         <activity android:name=".Activities.BasicVideoCall" />
         <activity
             android:name=".Activities.SignInActivity"

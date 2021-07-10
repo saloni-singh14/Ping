@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg6">
+    android:background="@color/white">
 
     <TextView
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="task"
+                android:text="Task"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -81,7 +81,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description"
+                android:text="Description"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -177,7 +177,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="time"
+                android:text="Time"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
