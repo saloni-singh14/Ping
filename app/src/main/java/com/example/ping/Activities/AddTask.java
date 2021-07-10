@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -65,6 +66,7 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
     private String key="",task,description,mdateset,mtimeset;
     public static int i=1;
     String[] taskpriority = {"Low Priority", "High Priority" };
+    Calendar calendar;
 
 
 
@@ -74,12 +76,6 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
         username=intent.getStringExtra("username");
-        /*email = intent.getStringExtra("email");
-
-        password=intent.getStringExtra("password");
-        fullname=intent.getStringExtra("fullname");
-        profession=intent.getStringExtra("profession");
-        phone=intent.getStringExtra("phone");*/
         category=intent.getStringExtra("category");
 
         setContentView(R.layout.activity_add_task);
@@ -91,7 +87,7 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
         prio=findViewById(R.id.mprior);
         prio.setOnItemSelectedListener(this);
         mtask =findViewById(R.id.task);
-
+        calendar=Calendar.getInstance();
         mdescription =findViewById(R.id.description);
         savebtn=findViewById(R.id.save);
         loader =new ProgressDialog(this);
@@ -116,11 +112,11 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
             }
         });
 
-        //Calendar calendar = Calendar.getInstance();
+
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handleDateButton();
+                handleDateButton(calendar);
 
             }
         });
@@ -128,8 +124,9 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
             @Override
             public void onClick(View view) {
 
-                DialogFragment timePicker = new TimePickerFragment();
-                timePicker.show(getSupportFragmentManager(), "time picker");
+               /* DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");*/
+                handleTimeButton(calendar);
             }
         });
         savebtn.setOnClickListener(new View.OnClickListener() {
@@ -153,9 +150,9 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
                         daysBetween = (int) (difference / (1000*60*60*24));
                         daysBetween++;
                         if(daysBetween>2)
-                            duedisp="due in "+daysBetween+" days";
+                            duedisp="Due in "+daysBetween+" days";
                         else if(daysBetween==1)
-                            duedisp="due tomorrow";
+                            duedisp="Due tomorrow";
 
                     }
 
@@ -164,9 +161,9 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
                         long difference =dateAfter.getTime() - dateBefore.getTime();
                         daysBetween = (int) (difference / (1000*60*60*24));
                         if(daysBetween==0)
-                            duedisp="due today";
+                            duedisp="Due today";
                         else
-                            duedisp="overdue by "+daysBetween+" days";
+                            duedisp="Overdue by "+daysBetween+" days";
                     }
 
 
@@ -205,6 +202,7 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
                             if(task.isSuccessful()){
                                 Toast.makeText(AddTask.this, "Task has been inserted succesfully", Toast.LENGTH_SHORT).show();
                                 loader.dismiss();
+
                             }
                             else
                             {
@@ -217,11 +215,6 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
 
 
                     Intent intent5=new Intent(AddTask.this,ToDoList.class);
-                    /*intent5.putExtra("password", password);
-                    intent5.putExtra("fullname", fullname);
-                    intent5.putExtra("profession", profession);
-                    intent5.putExtra("phone", phone);
-                    intent5.putExtra("email", email);*/
                     intent5.putExtra("username", username);
                     intent5.putExtra("category", "To Do List");
 
@@ -238,8 +231,8 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
 
     }
 
-    private void handleDateButton() {
-        Calendar calendar = Calendar.getInstance();
+    private void handleDateButton(Calendar calendar) {
+
         int YEAR = calendar.get(Calendar.YEAR);
         int MONTH = calendar.get(Calendar.MONTH);
         int DATE = calendar.get(Calendar.DATE);
@@ -268,37 +261,39 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
 
     }
 
-    //private void handleTimeButton() {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void handleTimeButton(Calendar calendar) {
 
 
-
-      /*  Calendar calendar = Calendar.getInstance();
+        //Calendar calendar = Calendar.getInstance();
         int HOUR = calendar.get(Calendar.HOUR);
         int MINUTE = calendar.get(Calendar.MINUTE);
         boolean is24HourFormat = DateFormat.is24HourFormat(this);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                 Log.i(TAG, "onTimeSet: " + hour + minute);
-                Calendar calendar1 = Calendar.getInstance();
-                calendar1.set(Calendar.HOUR_OF_DAY, hour);
-                calendar1.set(Calendar.MINUTE, minute);
-                String dateText = DateFormat.format("h:mm a", calendar1).toString();
+                //Calendar calendar1 = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                String dateText = DateFormat.format("h:mm a", calendar).toString();
                 timeTextView.setText(dateText);
-                startAlarm(calendar1);
+                startAlarm(calendar,i++);
 
             }
         }, HOUR, MINUTE, is24HourFormat);
 
         timePickerDialog.show();
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        /*AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
         if (calendar.before(Calendar.getInstance())) {
             calendar.add(Calendar.DATE, 1);
         }
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
+    }
 
 
 
@@ -341,11 +336,7 @@ public class AddTask extends AppCompatActivity implements TimePickerDialog.OnTim
         intent.putExtra("username", username);
         intent.putExtra("title", mTask);
         intent.putExtra("content", mDescription);
-        /*intent.putExtra("email",email);
-        intent.putExtra("fullname", fullname);
-        intent.putExtra("profession", profession);
-        intent.putExtra("phone", phone);
-        intent.putExtra("email", email);*/
+
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, intent, 0);
         if (c.before(Calendar.getInstance())) {

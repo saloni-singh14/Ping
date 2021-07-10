@@ -1,10 +1,52 @@
 package com.example.ping.Adapters;
 
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+
+import com.example.ping.R;
+
+class NotificationHelper extends ContextWrapper {
+    public static final String channelID = "channelID";
+    public static final String channelName = "Channel Name";
+    private NotificationManager mManager;
+
+    public NotificationHelper(Context base) {
+        super(base);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannel();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private void createChannel() {
+        NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH);
+        getManager().createNotificationChannel(channel);
+    }
+
+    public NotificationManager getManager() {
+        if (mManager == null) {
+            mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        return mManager;
+    }
+
+    public NotificationCompat.Builder getChannelNotification(String username, String title, String content) {
+        String s = "Dear " + username + ", you have a pending task: " + title+"  Task Description :"+content;
+
+        return new NotificationCompat.Builder(getApplicationContext(), channelID)
+                .setContentTitle("Reminder")
+                .setContentText(s)
+                .setSmallIcon(R.drawable.ic_baseline_access_alarm_24);
+    }
+}
 
 public class AlertReceiver extends BroadcastReceiver {
 
@@ -13,7 +55,10 @@ public class AlertReceiver extends BroadcastReceiver {
         String username=intent.getStringExtra("username");
         String title=intent.getStringExtra("title");
         String content=intent.getStringExtra("content");
-
+        String email = intent.getStringExtra("email");
+        String fullname=intent.getStringExtra("fullname");
+        String profession=intent.getStringExtra("profession");
+        String phone=intent.getStringExtra("phone");
 
         /*Properties properties = new Properties();
         //properties.put("mail.smtp.auth", "true");

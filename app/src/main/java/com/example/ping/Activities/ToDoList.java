@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,24 +63,15 @@ public class ToDoList extends AppCompatActivity  implements SearchView.OnQueryTe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         setContentView(R.layout.activity_to_do_list);
+
+        getSupportActionBar().hide(); // hide the title bar
 
         recyclerView=findViewById(R.id.recycleview);
         Intent intent = getIntent();
         username=intent.getStringExtra("username");
-       /* email = intent.getStringExtra("email");
 
-        password=intent.getStringExtra("password");
-        fullname=intent.getStringExtra("fullname");
-        profession=intent.getStringExtra("profession");
-        phone=intent.getStringExtra("phone");
-        String category=intent.getStringExtra("category");*/
-
-
-
-        //toolbar=findViewById(R.id.hometoolbar);
-        //setSupportActionBar(toolbar);
-        /*getSupportActionBar().setTitle(category);*/
         mAuth = FirebaseAuth.getInstance();
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -234,8 +226,9 @@ public class ToDoList extends AppCompatActivity  implements SearchView.OnQueryTe
                 holder.setmTIme(model.getmtime());
                 holder.setP(model.getMpriority());
                 String s1=model.getMpriority();
-                if(s1.equals("Low Priority")) holder.mview.setBackground(getDrawable(R.drawable.bbg));
-                else holder.mview.setBackground(getDrawable(R.drawable.bbg1));
+                if(s1.equals("Low Priority")) holder.mview.setBackground(getDrawable(R.drawable.blue_priority));
+                else holder.mview.setBackground(getDrawable(R.drawable.red_imp));
+
 
 
 
@@ -285,6 +278,11 @@ public class ToDoList extends AppCompatActivity  implements SearchView.OnQueryTe
     public boolean onQueryTextChange(String newText) {
 
         return false;
+    }
+
+    public void onBackClick(View view) {
+        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
     }
 
 

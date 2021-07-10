@@ -340,6 +340,8 @@ public class ChatActivity extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
+
+
     public void onVideoCallClick(MenuItem item) {
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         String userID=user.getUid();
@@ -374,5 +376,5 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-    }
+}
 

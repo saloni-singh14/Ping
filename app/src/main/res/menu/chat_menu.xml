@@ -6,12 +6,10 @@
         android:icon="@drawable/ic_video"
         android:onClick="onVideoCallClick"
         android:title="Video Call"
+        
         app:showAsAction="always" />
-    <item
-        android:icon="@drawable/ic_call"
-        android:title="Audio Call"
-        app:showAsAction="always" />
-    <item android:title="Profile" />
-    <item android:title="Block" />
-    <item android:title="Settings" />
+
+
+
+
 </menu>

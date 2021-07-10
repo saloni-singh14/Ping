@@ -243,12 +243,13 @@ public class MainActivity extends AppCompatActivity {
             /*case R.id.group:
                 startActivity(new Intent(MainActivity.this, GroupChatActivity.class));
                 break;*/
+            case R.id.videoCall:
+                onVideoCallClick();
+                break;
             case R.id.settings:
                 OnSettingsClicked();
                  break;
-            case R.id.search:
-                Toast.makeText(this, "Search clicked.", Toast.LENGTH_SHORT).show();
-                break;
+
             case R.id.Logout:
                 OnLogoutClicked(auth);
                 Toast.makeText(this, "Logout clicked", Toast.LENGTH_SHORT).show();
@@ -304,5 +305,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onVideoCallClick() {
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        String userID=user.getUid();
+        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        database.getReference().child("users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                User user=snapshot.getValue(User.class);
+                String name = user.getName();
+                sendToVideoCallActivity(name);
+
+
+            }
+
+            private void sendToVideoCallActivity(String userName) {
+                Intent intent=new Intent(MainActivity.this,VideoCallActivity.class);
+                Toast.makeText(getApplicationContext(),"The username being sent from Chat Activity is "+userName,Toast.LENGTH_SHORT).show();
+                intent.putExtra("userName", userName);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                Log.d(TAG, "User already exists");
+
+            }
+        });
     }
 }
