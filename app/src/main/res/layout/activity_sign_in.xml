@@ -32,6 +32,7 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/montserrat_regular"
                     android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_18sdp"
                     android:text="Already \nhave an \nAccount?" />
                 <ImageView
                     android:layout_width="wrap_content"
@@ -69,6 +70,7 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
                 android:text="Forgot Password?"
+                android:visibility="gone"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="@dimen/newsMoreTextSize" />
 
@@ -124,46 +126,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:gravity="center">
-               <!-- <ImageView
-                    android:id="@+id/OtpSignIn"
-                    android:src="@drawable/ic_phone_50"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
 
-                ></ImageView>-->
+                android:gravity="center">
+
                 <TextView
-                    android:layout_marginRight="10dp"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OTP"
+                    android:text="@string/otp"
                     android:textAlignment="center"
                     android:textColor="@color/themeColor"
-                    android:onClick="onPhoneClick"
                     android:drawableTop="@drawable/ic_phone_50"
-                    android:gravity="center_horizontal"></TextView>
-
-                <com.facebook.login.widget.LoginButton
-                    xmlns:fb="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/fb_login_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:onClick="onPhoneClick"
+                    />
 
 
-                    android:layout_gravity="top"
-                    android:height="50dp"
-                     />
 
                 <com.google.android.gms.common.SignInButton
+
                     android:id="@+id/googleSignInButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
+                    android:layout_marginLeft="20dp"
 
-                    android:layout_marginLeft="20dp" />
+
+                    />
+
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center">
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/fb_login_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="top"
+                    android:height="50dp"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
     <View

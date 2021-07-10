@@ -13,7 +13,7 @@
         android:title="Status" />
     <item
         android:id="@+id/calls"
-        android:icon="@drawable/icons8_phone_24"
-
-        android:title="Calls" />
+        android:icon="@drawable/ic_todo_list_24"
+        android:onClick="onToDoCLick"
+        android:title="To-do List" />
 </menu>

@@ -53,4 +53,6 @@
     <string name="title_channel">Channel</string>
     <string name="welcome_title">Login Into Agora</string>
     <string name="username">Username</string>
+    <string name="otp">OTP</string>
+    <string name="password_constraints">Password must contain atleast 4 characters and 1 special character</string>
 </resources>

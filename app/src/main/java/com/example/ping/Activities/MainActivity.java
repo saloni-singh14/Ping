@@ -19,12 +19,17 @@ import com.example.ping.Adapters.UsersAdapter;
 import com.example.ping.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "-1000";
@@ -267,5 +272,37 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.topmenu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void onToDoCLick(MenuItem item) {
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        String userID=user.getUid();
+        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        database.getReference().child("users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                User user=snapshot.getValue(User.class);
+                String name = user.getName();
+                sendToTaskActivity(name);
+
+
+            }
+
+            private void sendToTaskActivity(String userName) {
+                Intent intent=new Intent(MainActivity.this,ToDoList.class);
+                //Toast.makeText(getApplicationContext(),"The username being sent from Chat Activity is "+userName,Toast.LENGTH_SHORT).show();
+                intent.putExtra("username", userName);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                Log.d(TAG, "User already exists");
+
+            }
+        });
+
     }
 }
