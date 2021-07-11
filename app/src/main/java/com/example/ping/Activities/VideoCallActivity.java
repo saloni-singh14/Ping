@@ -74,7 +74,7 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
     public int mLayoutType = LAYOUT_TYPE_DEFAULT;
     private static final int PERMISSION_REQ_ID = 22;
     RtcEngine mRtcEngine;
-    private ImageView mCallBtn, mMuteBtn, mSwitchCameraBtn;
+    private ImageView mCallBtn, mMuteBtn, mSwitchCameraBtn, mEndCallBtn;
     private GridVideoViewContainer mGridVideoViewContainer;
     private boolean isCalling = true;
     private boolean isMuted = false;
@@ -118,8 +118,8 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
 
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
         @Override
-        // Listen for the onJoinChannelSuccess callback.
-        // This callback occurs when the local user successfully joins the channel.
+        /// Listen for the onJoinChannelSuccess callback.
+        /// This callback occurs when the local user successfully joins the channel.
         public void onJoinChannelSuccess(String channel, final int uid, int elapsed) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -205,6 +205,7 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
     private void initUI() {
         mCallBtn = findViewById(R.id.start_call_end_call_btn);
         mMuteBtn = findViewById(R.id.audio_mute_audio_unmute_btn);
+        mEndCallBtn=findViewById(R.id.end_call);
         mSwitchCameraBtn = findViewById(R.id.switch_camera_btn);
         mAddFriendLinearLayout = findViewById(R.id.layout_add_friends);
         mGridVideoViewContainer = findViewById(R.id.grid_video_view_container);
@@ -291,7 +292,7 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
         mChatManager.registerListener(mClientListener);
     }
 
-    //login into RTM for chat messaging
+    ///login into RTM for chat messaging
     private void loginRTM() {
         mRtmClient.login(null, userName, new io.agora.rtm.ResultCallback<Void>() {
             @Override
@@ -387,7 +388,7 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
     private void startMessaging(String userName) {
         mPeerId = userName;
         mMessageBeanList = new ArrayList<>();
-        // load history chat records
+        /// load history chat records
         MessageListBean messageListBean = MessageUtil.getExistMessageListBean(mPeerId);
 
         mTitleTextView.setText(mPeerId);
@@ -396,6 +397,7 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
         mSwitchCameraBtn.setVisibility(View.GONE);
         mCallBtn.setVisibility(View.GONE);
         mMuteBtn.setVisibility(View.GONE);
+        mEndCallBtn.setVisibility(View.GONE);
         mAddFriendLinearLayout.setVisibility(View.GONE);
         mShowFriendLinearLayout.setVisibility(View.GONE);
 
@@ -725,6 +727,7 @@ public class VideoCallActivity extends AppCompatActivity {public static final in
         mSwitchCameraBtn.setVisibility(View.VISIBLE);
         mCallBtn.setVisibility(View.VISIBLE);
         mMuteBtn.setVisibility(View.VISIBLE);
+        mEndCallBtn.setVisibility(View.VISIBLE);
     }
 
     public void onClickSend(View v) {

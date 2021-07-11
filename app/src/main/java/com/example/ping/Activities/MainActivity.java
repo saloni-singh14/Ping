@@ -1,22 +1,30 @@
 package com.example.ping.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.ping.Adapters.TopStatusAdapter;
+import com.example.ping.Models.Story;
+import com.example.ping.Models.UserStory;
 import com.example.ping.R;
 import com.example.ping.Models.User;
 import com.example.ping.Adapters.UsersAdapter;
 import com.example.ping.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,10 +32,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
@@ -37,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     ArrayList<User> users;
     UsersAdapter usersAdapter;
-   /* TopStatusAdapter statusAdapter;
-    ArrayList<UserStatus> userStatuses;*/
+    TopStatusAdapter statusAdapter;
+    ArrayList<UserStory> userStories;
     ProgressDialog dialog;
 
     FirebaseAuth auth;
@@ -56,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         auth=FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         users = new ArrayList<>();
+        userStories = new ArrayList<>();
         database.getReference().child("users").child(FirebaseAuth.getInstance().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -71,17 +85,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         usersAdapter = new UsersAdapter(this, users);
-        //statusAdapter = new TopStatusAdapter(this, userStatuses);
-//        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        statusAdapter = new TopStatusAdapter(this, userStories);
+        //binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        /*binding.statusList.setLayoutManager(layoutManager);
-        binding.statusList.setAdapter(statusAdapter);*/
+        binding.statusList.setLayoutManager(layoutManager);
+        binding.statusList.setAdapter(statusAdapter);
 
         binding.recyclerView.setAdapter(usersAdapter);
 
         binding.recyclerView.showShimmerAdapter();
-        //binding.statusList.showShimmerAdapter();
+        binding.statusList.showShimmerAdapter();
 
         database.getReference().child("users").addValueEventListener(new ValueEventListener() {
             @Override
@@ -121,26 +135,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-/*        database.getReference().child("stories").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("stories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    userStatuses.clear();
+                    if (userStories!=null)
+                    {
+                        userStories.clear();
+                    }
+
                     for(DataSnapshot storySnapshot : snapshot.getChildren()) {
-                        UserStatus status = new UserStatus();
+                        UserStory status = new UserStory();
                         status.setName(storySnapshot.child("name").getValue(String.class));
                         status.setProfileImage(storySnapshot.child("profileImage").getValue(String.class));
                         status.setLastUpdated(storySnapshot.child("lastUpdated").getValue(Long.class));
 
-                        ArrayList<Status> statuses = new ArrayList<>();
+                        ArrayList<Story> statuses = new ArrayList<>();
 
                         for(DataSnapshot statusSnapshot : storySnapshot.child("statuses").getChildren()) {
-                            Status sampleStatus = statusSnapshot.getValue(Status.class);
+                            Story sampleStatus = statusSnapshot.getValue(Story.class);
                             statuses.add(sampleStatus);
                         }
 
                         status.setStatuses(statuses);
-                        userStatuses.add(status);
+                        userStories.add(status);
                     }
                     binding.statusList.hideShimmerAdapter();
                     statusAdapter.notifyDataSetChanged();
@@ -151,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });*/
+        });
 
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -171,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-/*    @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -189,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                             reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    UserStatus userStatus = new UserStatus();
+                                    UserStory userStatus = new UserStory();
                                     userStatus.setName(user.getName());
                                     userStatus.setProfileImage(user.getProfileImage());
                                     userStatus.setLastUpdated(date.getTime());
@@ -200,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                                     obj.put("lastUpdated", userStatus.getLastUpdated());
 
                                     String imageUrl = uri.toString();
-                                    Status status = new Status(imageUrl, userStatus.getLastUpdated());
+                                    Story status = new Story(imageUrl, userStatus.getLastUpdated());
 
                                     database.getReference()
                                             .child("stories")
@@ -221,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }
-    }*/
+    }
 
     @Override
     protected void onResume() {
@@ -323,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
             private void sendToVideoCallActivity(String userName) {
                 Intent intent=new Intent(MainActivity.this,VideoCallActivity.class);
-                Toast.makeText(getApplicationContext(),"The username being sent from Chat Activity is "+userName,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"The username being sent from Chat Activity is "+userName,Toast.LENGTH_SHORT).show();
                 intent.putExtra("userName", userName);
                 startActivity(intent);
 

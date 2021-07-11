@@ -358,7 +358,7 @@ public class ChatActivity extends AppCompatActivity {
 
             private void sendToVideoCallActivity(String userName) {
                 Intent intent=new Intent(ChatActivity.this,VideoCallActivity.class);
-                Toast.makeText(getApplicationContext(),"The username being sent from Chat Activity is "+userName,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"The username being sent from Chat Activity is "+userName,Toast.LENGTH_SHORT).show();
                 intent.putExtra("userName", userName);
                 startActivity(intent);
 

@@ -7,6 +7,10 @@
         android:title="Chats"
         
         />
+    <item
+        android:id="@+id/status"
+        android:icon="@drawable/ic_status"
+        android:title="Status" />
 
 
     <item
