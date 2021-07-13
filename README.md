@@ -1,9 +1,9 @@
 # Ping
-<h2>Description</h2>
+<h3>Description</h3>
 <p>Ping is a secure and efficient solution that helps you meet, chat, and collaborate, all in one place.
 It has many features, including User authentication, Group video calling, Cloud-based persistent messaging, to-do lists, reminders and much more.</p>
 
-<h2>Features</h2>
+<h3>Features</h3>
 <ul>
 <li>Multiple authentication and sign-in methods</li>
 <li>Profile set-up with profile image and username</li>
@@ -15,7 +15,7 @@ It has many features, including User authentication, Group video calling, Cloud-
 <li>Get reminders for all of your tasks with push notifications</li>
 <li>Capture moments and share them using stories</li>
 </ul>
-<h2>Technology</h2>
+<h3>Technology</h3>
 <ul>
 <li>Android app written in Java</li>
 <li>Firebase Authentication for registering users</li>
