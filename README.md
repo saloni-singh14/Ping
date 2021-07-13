@@ -2,7 +2,22 @@
 <h3>Description</h3>
 <p>Ping is a secure and efficient solution that helps you meet, chat, and collaborate, all in one place.
 It has many features, including User authentication, Group video calling, Cloud-based persistent messaging, to-do lists, reminders and much more.</p>
+<h3>Links</h2>
+<ul>
+  <li>
 
+You can download the apk [here](https://drive.google.com/file/d/1ZUDrqwtt5CsWSd3cwPhH_zppvbKDQEXb/view?usp=sharing)
+
+  </li>
+ <li>
+   
+Check out the demo video [here](https://youtu.be/LHg9rt1bNvM)
+</li>
+  <li>
+    
+Check out my presentation [here](https://drive.google.com/file/d/1de2Ld5zq4QdwqvNZv_bIF4WorP5hrCoY/view)
+  </li>
+  </ul>
 <h3>Features</h3>
 <ul>
 <li>Multiple authentication and sign-in methods</li>
